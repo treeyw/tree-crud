@@ -20,33 +20,29 @@
 
 ### 1. 控制器示例
 ```java
-// 查询参数有值时，自动按值拼接条件，例如 name=xx，page=1&pageSize=20&sort=id
-@RequestMapping("list")
-public ApiResult list(TreeywDemoDO to) throws Exception {
-    // 额外补充查询条件
-    to.addWhere("id", QueryTypeBO.GT, 0);
-    return ApiResult.ok(parentQuery.listQuery(to));
-}
+TreeywDemoDO query = new TreeywDemoDO();
+query.setId(5L);
+to.addWhere("id", QueryTypeBO.GT, 0);
+to.addWhere("type", QueryTypeBO.LIKE, "模糊");
+//默认查询count/list，自动多页场景下分页优化
+ListVO listVO=parentQuery.listQuery(to);
+//可单独查询count
+listVO=parentQuery.listQuery(to,true,false);
+//可单独查询list
+listVO=parentQuery.listQuery(to,false,true);
+//查询指定字段
+listVO=parentQuery.listQuery(to,true,true,"id,name,type");
 
-// 查询列表（不执行 count，提高效率）
-@RequestMapping("listSelect")
-public ApiResult listSelect(TreeywDemoDO to) throws Exception {
-    return ApiResult.ok(parentQuery.listQuery(to, false, true, "id,command"));
-}
+//新增或修改 支持事务，无id新增，有id修改
+TreeywDemoDO demo = new TreeywDemoDO();
+parentModify.save(demo);
 
-// 新增或修改（支持事务：无 id = 新增，有 id = 修改）
-@Transactional
-@RequestMapping("save")
-public ApiResult save(TreeywDemoDO to) throws Exception {
-    return ApiResult.ok(parentModify.save(to));
-}
+//逻辑删除
+parentModify.parentDelete(1L,TreeywDemoDO.class)
+//物理删除
+parentModify.sysDelete(1L,TreeywDemoDO.class)
+```
 
-// 删除（逻辑删除，物理删除可用 parentModify.sysDeleteById）
-@RequestMapping("del")
-public ApiResult del(TreeywDemoDO to) throws Exception {
-    return ApiResult.ok(parentModify.parentDelete(to));
-}
-```   
 ### 2. 定义实体类
 ```java
 @Entity
