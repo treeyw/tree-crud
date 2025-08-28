@@ -1,6 +1,7 @@
 // DynamicJpaAutoConfig.java
 package io.github.treeyw.crud.config.datasource;
 
+import io.github.treeyw.crud.config.init.CrashStaticCrud;
 import io.github.treeyw.crud.dao.jpa.comment.CommentIntegrator;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +56,9 @@ public class DynamicJpaAutoConfig {
     @ConditionalOnMissingBean
     public EntityManagerRegistry entityManagerRegistry() {
         initSysConsoleYml(environment);
+        //要扫描的实体类包
+        sysPackagePath= CrashStaticCrud.SYS_CONSOLE_YML.getProperty("tree-crud.entity-package").split(",");
+
         EntityManagerRegistry.scanEntities();
 
         DefaultListableBeanFactory bf = (DefaultListableBeanFactory) ctx.getAutowireCapableBeanFactory();

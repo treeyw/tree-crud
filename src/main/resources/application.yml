@@ -23,6 +23,7 @@ spring:
       - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
       - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
 tree-crud:
+  entity-package: io.github.treeyw.crud.model #实体类所在包,多个英文逗号分隔
   jpa:
     default-key: main
     sources:
