@@ -39,8 +39,7 @@ public class SysDemoController extends ParentSevice {
     //删除
     @RequestMapping("del")
     public ApiResult del(TreeywDemoDO to) throws Exception {
-        //物理删除为
-        //return createCommonPack(parentModify.sysDeleteById("1",to));
+        //物理删除为parentModify.sysDeleteById(to.getId());
         return ApiResult.ok(parentModify.parentDelete(to));
     }
 
