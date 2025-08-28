@@ -20,6 +20,7 @@
 
 ### 1. 控制器示例
 ```java
+//查询方法，参数有值则按值查询，addWhere为更多查询条件，默认支持分页/count
 TreeywDemoDO query = new TreeywDemoDO();
 query.setId(5L);
 to.addWhere("id", QueryTypeBO.GT, 0);
