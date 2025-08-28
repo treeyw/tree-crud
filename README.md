@@ -17,9 +17,9 @@
 
 ## 🛠 使用方式
 
-
 ### 1. 控制器示例
 ```java
+//继承 extends ParentSevice 则可以使用 parentQuery、parentModify
 //查询方法，参数有值则按值查询，addWhere为更多查询条件，默认支持分页/count
 TreeywDemoDO query = new TreeywDemoDO();
 query.setId(5L);
@@ -75,4 +75,25 @@ public class TreeywDemoDO extends ParentDO {
     @FieldComment(value = "模拟外部对象", param = false)
     private TreeywDemoDO oDemo;
 }
+```
+### 配置方式
+```
+#yml内的配置项
+tree-crud:
+  entity-package: io.github.treeyw.crud.model #实体类所在包,多个英文逗号分隔
+  jpa:
+    default-key: main
+    sources:
+      main: #数据源名称
+        dbType: mysql
+        dbName: tree #补充项，尽量填写，url中也要有避免分割意外
+        url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
+        username: root
+        password: 123456
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        max-wait: 10000
+        min-idle: 2
+        max-active: 5
+        ddlAuto: update
+        dialect: org.hibernate.dialect.MySQL8Dialect
 ```
