@@ -26,7 +26,7 @@ tree-crud:
   jpa:
     default-key: main
     sources:
-      main:
+      main: #数据源名称
         dbType: mysql
         dbName: tree #补充项，尽量填写，url中也要有避免分割意外
         url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
@@ -38,7 +38,7 @@ tree-crud:
         max-active: 5
         ddlAuto: update
         dialect: org.hibernate.dialect.MySQL8Dialect
-      tool:
+      tool: #数据源名称
         dbType: mysql
         dbName: tree2 #补充项，尽量填写，url中也要有避免分割意外
         url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
