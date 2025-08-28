@@ -76,7 +76,7 @@ public class TreeywDemoDO extends ParentDO {
     private TreeywDemoDO oDemo;
 }
 ```
-### 配置方式
+### 3. 配置
 ```
 #yml内的配置项
 tree-crud:
