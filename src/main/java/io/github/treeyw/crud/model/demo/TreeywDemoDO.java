@@ -18,7 +18,7 @@ import java.util.Date;
 )
 @DataSourceDB(
         dataSource = "main",
-        tableName = "文件迁移任务"
+        tableName = "测试样例"
 )
 @Data
 public class TreeywDemoDO extends ParentDO {
