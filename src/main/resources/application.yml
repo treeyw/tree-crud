@@ -1,0 +1,62 @@
+server:
+  port: 8078
+  servlet:
+    context-path: /treeyw-crud
+  max-http-request-header-size: 8000
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+    view:
+      prefix: /WEB-INF/
+      suffix: .*
+    static-path-pattern:
+      resources:
+        static-locations: classpath:/static/
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+    time-zone: Asia/Shanghai
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+tree-crud:
+  jpa:
+    default-key: main
+    sources:
+      main:
+        dbType: mysql
+        dbName: tree #补充项，尽量填写，url中也要有避免分割意外
+        url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
+        username: root
+        password: 123456
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        max-wait: 10000
+        min-idle: 2
+        max-active: 5
+        ddlAuto: update
+        dialect: org.hibernate.dialect.MySQL8Dialect
+      tool:
+        dbType: mysql
+        dbName: tree2 #补充项，尽量填写，url中也要有避免分割意外
+        url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
+        username: root
+        password: 123456
+        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+        max-wait: 10000
+        min-idle: 2
+        max-active: 5
+        ddlAuto: update
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  logging:
+    level:
+      root: info
+    savedays: 10
+    sqllv: INFO
+    path: /home/javaData/logs/tree-crud/
+  apidoc:
+    open: 1 #1开，0关（线上环境注意关掉）
+
