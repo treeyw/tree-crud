@@ -13,7 +13,6 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.apache.poi.ss.formula.functions.T;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -282,7 +281,7 @@ public class ParentQueryService {
 
     // ... rest of the class
 
-    public List query(Object t, JpaEntityBO jb) throws Exception {
+    public <T> List query(Object t, JpaEntityBO jb) throws Exception {
         JpaManegerBO jm = daoCriteria.getEntityManagerSession(jb);
         List list = null;
         try {

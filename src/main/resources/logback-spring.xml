@@ -2,18 +2,16 @@
 <configuration>
 
     <!-- 日志存放文件夹 -->
-    <springProperty scope="context" name="CERT_PATH" source="tree-crud.logging.path"
+    <springProperty scope="context" name="CERT_PATH" source="logging.filepath"
                     defaultValue="/home/javaData/logs/"/>
-    <springProperty scope="context" name="LINK_CLAZZ" source="tree-crud.logging.link_clazz"
+    <springProperty scope="context" name="LINK_CLAZZ" source="logging.link_clazz"
                     defaultValue="ConsoleLinkLogUtil"/>
-    <springProperty scope="context" name="MESSAGE_CLAZZ" source="tree-crud.logging.message_clazz"
+    <springProperty scope="context" name="MESSAGE_CLAZZ" source="logging.message_clazz"
                     defaultValue="ConsoleMessageLogUtil"/>
-
-    <springProperty scope="context" name="SQL_LV" source="tree-crud.logging.sqllv"
-                    defaultValue="ERROR"/>
-    <springProperty scope="context" name="SAVE_DAY" source="tree-crud.logging.savedays"
+    <springProperty scope="context" name="SAVE_DAY" source="logging.savedays"
                     defaultValue="100000"/>
-
+    <springProperty scope="context" name="SQL_LV" source="logging.sql"
+                    defaultValue="ERROR"/>
 
     <!-- 控制台打印日志的相关配置 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -125,6 +123,4 @@
     <logger name="jdbc.audit" level="OFF"/>
     <logger name="jdbc.sqltiming" level="${SQL_LV}"/>
     <logger name="jdbc.sqlonly" level="OFF"/>
-
-
 </configuration>

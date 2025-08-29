@@ -57,7 +57,7 @@ public class DynamicJpaAutoConfig {
     public EntityManagerRegistry entityManagerRegistry() {
         initSysConsoleYml(environment);
         //要扫描的实体类包
-        sysPackagePath= CrashStaticCrud.SYS_CONSOLE_YML.getProperty("tree-crud.entity-package").split(",");
+        sysPackagePath = CrashStaticCrud.SYS_CONSOLE_YML.getProperty("tree-crud.entity-package").split(",");
 
         EntityManagerRegistry.scanEntities();
 
@@ -95,10 +95,9 @@ public class DynamicJpaAutoConfig {
 
             // JPA props
             Map<String, Object> jpaProps = new HashMap<>();
-            String ddlAuto = (p.getHbm2ddlAuto() != null) ? p.getHbm2ddlAuto() : p.getDdlAuto();
+            String ddlAuto = p.getDdlAuto();
             jpaProps.put("hibernate.hbm2ddl.auto", ddlAuto);
             if (p.getDialect() != null) jpaProps.put("hibernate.dialect", p.getDialect());
-            jpaProps.put("hibernate.show_sql", p.getShowSql());
             jpaProps.put("hibernate.integrator_provider",
                     (IntegratorProvider) () -> Collections.singletonList(CommentIntegrator.INSTANCE));
             jpaProps.put("hibernate.physical_naming_strategy",

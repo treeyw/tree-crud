@@ -77,6 +77,7 @@ public class CrudConfig {
      * @date 2025/8/24 19:43
      */
     public static String stripDatabaseFromUrl(String url) {
+        url=url.replace("log4jdbc:","");
         if (ckIsEmpty(url)) return url;
         if (url.contains("?")) {
             //?前面去掉最后一个/到?中间的

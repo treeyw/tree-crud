@@ -41,8 +41,6 @@ public class TreeCrudJpaProperties {
         private Integer maxActive;
         private String ddlAuto = "none"; // update / none...
         private String dialect;         // 可选: org.hibernate.dialect.MySQL8Dialect
-        private String showSql = "false";
-        private String hbm2ddlAuto;     // 兼容老习惯
         private Map<String, String> jpa = new LinkedHashMap<>(); // 允许透传任意 jpa 属性
     }
 }

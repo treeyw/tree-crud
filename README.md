@@ -90,7 +90,6 @@ tree-crud:
         url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
         username: root
         password: 123456
-        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
         max-wait: 10000
         min-idle: 2
         max-active: 5

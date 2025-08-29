@@ -8,16 +8,13 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
-import org.apache.poi.ss.formula.functions.T;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionImplementor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 /**
@@ -79,7 +76,7 @@ public class CriteriaManager {
     }
 
 
-    public Object unique(final CriteriaQuery<T> result, JpaManegerBO jm) throws Exception {
+    public <T> Object unique(final CriteriaQuery<T> result, JpaManegerBO jm) throws Exception {
         try {
             TypedQuery<T> typedQuery = jm.getManager().createQuery(result);
             typedQuery.setFirstResult(0);

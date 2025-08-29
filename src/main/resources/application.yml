@@ -51,13 +51,12 @@ tree-crud:
         max-active: 5
         ddlAuto: update
         dialect: org.hibernate.dialect.MySQL8Dialect
-
-  logging:
-    level:
-      root: info
-    savedays: 10
-    sqllv: INFO
-    path: /home/javaData/logs/tree-crud/
+logging:
+  level:
+    root: info
+  savedays: 10
+  filepath: /home/javaData/logs/tree-crud/
   apidoc:
-    open: 1 #1开，0关（线上环境注意关掉）
+  open: 1 #1开，0关（线上环境注意关掉）
+  sql: info
 
