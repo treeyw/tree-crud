@@ -35,7 +35,6 @@ public class MainApplication {
         //免https证书认证FastDfsFileController
         disableSslverifcation();
         //扫描这些包下面的实体，加入持久化管理
-        SysConfig.sysPackagePath = new String[]{"io.github.treeyw.crud"};
         new SpringApplicationBuilder(MainApplication.class)
                 .properties("spring.config.location=classpath:/application.yml")
                 .run(args);
