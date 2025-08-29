@@ -94,5 +94,5 @@ tree-crud:
         min-idle: 2
         max-active: 5
         ddlAuto: update
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect 
 ```
