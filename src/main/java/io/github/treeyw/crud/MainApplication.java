@@ -23,13 +23,8 @@ import java.security.cert.X509Certificate;
 @ServletComponentScan
 @EnableConfigurationProperties
 @EnableAsync(proxyTargetClass = true)
-@SpringBootApplication(exclude = {
-        org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration.class,
-        org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class,
-        org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration.class
-})
+@SpringBootApplication
 public class MainApplication {
-
 
     public static void main(String[] args) throws Exception {
         //免https证书认证FastDfsFileController
