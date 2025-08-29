@@ -3,7 +3,6 @@ package io.github.treeyw.crud.controller;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.treeyw.crud.config.datasource.model.QueryTypeBO;
 import io.github.treeyw.crud.model.demo.TreeywDemoDO;
-import io.github.treeyw.crud.model.demo.TreeywDemo2DO;
 import io.github.treeyw.crud.service.common.ParentSevice;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;

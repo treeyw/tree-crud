@@ -1,4 +1,4 @@
-package io.github.treeyw.crud.model.demo;
+package io.github.treeyw.crud.model.demo2;
 
 
 import io.github.treeyw.crud.config.datasource.model.DataSourceDB;
