@@ -11,10 +11,8 @@
         <relativePath/>
     </parent>
     <groupId>io.github.treeyw</groupId>
-    <artifactId>treecrud</artifactId>
+    <artifactId>tree-crud</artifactId>
     <version>1.0.0</version>
-    <name>treecrud</name>
-    <description>treecrud</description>
 
     <dependencies>
         <!-- 工程常规工具 -->
