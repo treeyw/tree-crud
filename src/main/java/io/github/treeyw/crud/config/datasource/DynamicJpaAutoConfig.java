@@ -46,6 +46,8 @@ public class DynamicJpaAutoConfig {
     private final TreeCrudJpaProperties props;
     @Autowired
     ConfigurableEnvironment environment;
+    @Autowired
+    CrashStaticCrud crashStaticCrud;
 
     /**
      * @author treeyw
