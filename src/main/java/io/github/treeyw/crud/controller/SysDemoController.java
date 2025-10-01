@@ -1,7 +1,7 @@
 package io.github.treeyw.crud.controller;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.treeyw.crud.config.datasource.model.QueryTypeBO;
+import io.github.treeyw.crud.model.ApiResult;
 import io.github.treeyw.crud.model.demo.TreeywDemoDO;
 import io.github.treeyw.crud.service.common.ParentSevice;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,21 +42,7 @@ public class SysDemoController extends ParentSevice {
         return ApiResult.ok(parentModify.parentDelete(to));
     }
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public record ApiResult<T>(
-            int code,          // 0=OK
-            String msg,    // "OK" 或错误信息
-            T data,
-            long timestamp   // System.currentTimeMillis()
-    ) {
-        public static <T> ApiResult<T> ok(T data) {
-            return new ApiResult<>(0, "OK", data, System.currentTimeMillis());
-        }
 
-        public static <T> ApiResult<T> error(int code, String msg) {
-            return new ApiResult<>(code, msg, null, System.currentTimeMillis());
-        }
-    }
 
 
 }
