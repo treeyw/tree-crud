@@ -6,7 +6,6 @@ import io.github.treeyw.crud.dao.jpa.comment.CommentIntegrator;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.hibernate.jpa.boot.spi.IntegratorProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -16,8 +15,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -29,7 +28,6 @@ import java.util.*;
 
 import static io.github.treeyw.crud.config.datasource.CrudConfig.createDatabase;
 import static io.github.treeyw.crud.config.datasource.EntityManagerRegistry.classUnitMap;
-import static io.github.treeyw.crud.config.init.CrashStaticCrud.initSysConsoleYml;
 import static io.github.treeyw.crud.config.sys.SysConfig.sysPackagePath;
 
 
@@ -45,8 +43,6 @@ public class DynamicJpaAutoConfig {
     private final ApplicationContext ctx;
     private final TreeCrudJpaProperties props;
     @Autowired
-    ConfigurableEnvironment environment;
-    @Autowired
     CrashStaticCrud crashStaticCrud;
 
     /**
@@ -57,9 +53,6 @@ public class DynamicJpaAutoConfig {
     @Bean
     @ConditionalOnMissingBean
     public EntityManagerRegistry entityManagerRegistry() {
-        initSysConsoleYml(environment);
-        //要扫描的实体类包
-        sysPackagePath = CrashStaticCrud.SYS_CONSOLE_YML.getProperty("tree-crud.entity-package").split(",");
 
         EntityManagerRegistry.scanEntities();
 

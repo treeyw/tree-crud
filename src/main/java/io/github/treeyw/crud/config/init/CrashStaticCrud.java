@@ -37,39 +37,17 @@ import static io.github.treeyw.crud.util.CheckObjUtil.ckIsNotEmpty;
 @Component
 @Transactional
 public class CrashStaticCrud {
+    @Autowired
+    ConfigurableEnvironment environment;
     final static Logger log = LoggerFactory.getLogger(CrashStaticCrud.class);
 
     public static Properties SYS_CONSOLE_YML_PROPERTIES;
 
-    public static void initSysConsoleYml(ConfigurableEnvironment environment) {
-        try {
-            log.info("加载yml");
-            //获取yml
-            String ymlclass = environment.getProperty("spring.config.location");
-            log.info("environment:" + ymlclass);
-            YamlPropertiesFactoryBean yamlMapFactoryBean = new YamlPropertiesFactoryBean();
-            if (ckIsNotEmpty(ymlclass))
-                yamlMapFactoryBean.setResources(new ClassPathResource(ymlclass));
-            else yamlMapFactoryBean.setResources(new ClassPathResource("application.yml"));
-            try {
-                SYS_CONSOLE_YML_PROPERTIES = yamlMapFactoryBean.getObject();
-            } catch (Exception e) {
-                try {
-                    yamlMapFactoryBean.setResources(new FileSystemResource(ymlclass));
-                    SYS_CONSOLE_YML_PROPERTIES = yamlMapFactoryBean.getObject();
-                } catch (Exception e2) {
-                    yamlMapFactoryBean.setResources(new ClassPathResource("application.yml"));
-                    SYS_CONSOLE_YML_PROPERTIES = yamlMapFactoryBean.getObject();
-                }
-            }
-
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-    }
 
     @PostConstruct
     public void init() throws Exception {
+        initSysConsoleYml(environment);
+        sysPackagePath = CrashStaticCrud.SYS_CONSOLE_YML.getProperty("tree-crud.entity-package").split(",");
         //装载项目名
         ParameAttribute.PROJECTNAME = SYS_CONSOLE_YML.getProperty("server.servlet.context-path");
         JSONObject.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -189,5 +167,31 @@ public class CrashStaticCrud {
         }
     }
 
+    public static void initSysConsoleYml(ConfigurableEnvironment environment) {
+        try {
+            log.info("加载yml");
+            //获取yml
+            String ymlclass = environment.getProperty("spring.config.location");
+            log.info("environment:" + ymlclass);
+            YamlPropertiesFactoryBean yamlMapFactoryBean = new YamlPropertiesFactoryBean();
+            if (ckIsNotEmpty(ymlclass))
+                yamlMapFactoryBean.setResources(new ClassPathResource(ymlclass));
+            else yamlMapFactoryBean.setResources(new ClassPathResource("application.yml"));
+            try {
+                SYS_CONSOLE_YML_PROPERTIES = yamlMapFactoryBean.getObject();
+            } catch (Exception e) {
+                try {
+                    yamlMapFactoryBean.setResources(new FileSystemResource(ymlclass));
+                    SYS_CONSOLE_YML_PROPERTIES = yamlMapFactoryBean.getObject();
+                } catch (Exception e2) {
+                    yamlMapFactoryBean.setResources(new ClassPathResource("application.yml"));
+                    SYS_CONSOLE_YML_PROPERTIES = yamlMapFactoryBean.getObject();
+                }
+            }
+
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
 
 }

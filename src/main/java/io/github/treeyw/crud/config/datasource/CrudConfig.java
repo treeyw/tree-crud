@@ -3,17 +3,15 @@ package io.github.treeyw.crud.config.datasource;
 import io.github.treeyw.crud.util.ObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Date;
-
-import static io.github.treeyw.crud.config.init.CrashStaticCrud.initSysConsoleYml;
-import static io.github.treeyw.crud.util.CheckObjUtil.ckIsEmpty;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static io.github.treeyw.crud.util.CheckObjUtil.ckIsEmpty;
 
 @Slf4j
 public class CrudConfig {
