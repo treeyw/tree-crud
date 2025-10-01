@@ -1,6 +1,5 @@
 package io.github.treeyw.crud;
 
-import io.github.treeyw.crud.config.sys.SysConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -24,13 +23,13 @@ import java.security.cert.X509Certificate;
 @EnableConfigurationProperties
 @EnableAsync(proxyTargetClass = true)
 @SpringBootApplication
-public class MainApplication {
+public class CrudApplication {
 
     public static void main(String[] args) throws Exception {
         //免https证书认证FastDfsFileController
         disableSslverifcation();
         //扫描这些包下面的实体，加入持久化管理
-        new SpringApplicationBuilder(MainApplication.class)
+        new SpringApplicationBuilder(CrudApplication.class)
                 .properties("spring.config.location=classpath:/application.yml")
                 .run(args);
     }
