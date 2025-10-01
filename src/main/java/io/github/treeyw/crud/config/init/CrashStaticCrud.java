@@ -84,22 +84,7 @@ public class CrashStaticCrud {
         List<String> P_CLOUM = new ArrayList<>();
         List<String> P_TRANSIENT = new ArrayList<>();
         Map<String, Column> P_COLUMN = new HashMap();
-        //反射ParentDO
-        for (Field field : ParentDO.class.getDeclaredFields()) {
-            field.setAccessible(true); // 可访问私有字段
-            String fieldName = field.getName();
-            // 判断是否是 @Transient
-            if (field.isAnnotationPresent(Transient.class)) {
-                P_TRANSIENT.add(fieldName);
-            } else {
-                P_CLOUM.add(fieldName);
-            }
-            // 判断是否有 @Column 注解
-            Column column = field.getAnnotation(Column.class);
-            if (column != null) {
-                P_COLUMN.put(fieldName, column);
-            }
-        }
+
         //反射，维护parentDO里的Transient字段均不进入sql的拼接与生成
         fsParentDO(P_FIELDCOMMENT, P_CLOUM, P_TRANSIENT, P_COLUMN);
 
@@ -165,8 +150,7 @@ public class CrashStaticCrud {
             CLASS_AND_TRANSIENT.putIfAbsent(className, new ArrayList<>());
             CLASS_AND_CLOUM.putIfAbsent(className, new ArrayList<>());
             CLASS_AND_FIELDCOMMENT.putIfAbsent(className, new HashMap<>());
-            Field[] fields = n.getDeclaredFields();
-            for (Field field : fields) {
+            for (Field field : ParentDO.class.getDeclaredFields()) {
                 if (field.isAnnotationPresent(Transient.class)) {
                     CLASS_AND_TRANSIENT.get(className).add(field.getName());
                     P_TRANSIENT.add(field.getName());
@@ -185,7 +169,6 @@ public class CrashStaticCrud {
                     P_COLUMN.put(field.getName(), field.getAnnotation(Column.class));
                 }
             }
-
         });
     }
 
