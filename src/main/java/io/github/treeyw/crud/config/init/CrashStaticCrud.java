@@ -145,31 +145,29 @@ public class CrashStaticCrud {
     public static void fsParentDO(Map<String, FieldComment> P_FIELDCOMMENT,
                                   List<String> P_CLOUM,
                                   List<String> P_TRANSIENT, Map<String, Column> P_COLUMN) {
-        new Reflections(new ConfigurationBuilder().forPackages(sysPackagePath)).getTypesAnnotatedWith(MappedSuperclass.class, true).forEach(n -> {
-            Class className = n;
-            CLASS_AND_TRANSIENT.putIfAbsent(className, new ArrayList<>());
-            CLASS_AND_CLOUM.putIfAbsent(className, new ArrayList<>());
-            CLASS_AND_FIELDCOMMENT.putIfAbsent(className, new HashMap<>());
-            for (Field field : ParentDO.class.getDeclaredFields()) {
-                if (field.isAnnotationPresent(Transient.class)) {
-                    CLASS_AND_TRANSIENT.get(className).add(field.getName());
-                    P_TRANSIENT.add(field.getName());
-                } else {
-                    CLASS_AND_CLOUM.get(className).add(field.getName());
-                    P_CLOUM.add(field.getName());
-                }
-                if (field.isAnnotationPresent(FieldComment.class)) {
-                    CLASS_AND_FIELDCOMMENT.get(className).put(field.getName(), field.getAnnotation(FieldComment.class));
-                    P_FIELDCOMMENT.put(field.getName(), field.getAnnotation(FieldComment.class));
-                } else {
-                    P_FIELDCOMMENT.put(field.getName(), ST_FIELDCOMMENT);
-                }
-                //特殊注解
-                if (field.isAnnotationPresent(Column.class)) {
-                    P_COLUMN.put(field.getName(), field.getAnnotation(Column.class));
-                }
+        Class className = ParentDO.class;
+        CLASS_AND_TRANSIENT.putIfAbsent(className, new ArrayList<>());
+        CLASS_AND_CLOUM.putIfAbsent(className, new ArrayList<>());
+        CLASS_AND_FIELDCOMMENT.putIfAbsent(className, new HashMap<>());
+        for (Field field : className.getDeclaredFields()) {
+            if (field.isAnnotationPresent(Transient.class)) {
+                CLASS_AND_TRANSIENT.get(className).add(field.getName());
+                P_TRANSIENT.add(field.getName());
+            } else {
+                CLASS_AND_CLOUM.get(className).add(field.getName());
+                P_CLOUM.add(field.getName());
             }
-        });
+            if (field.isAnnotationPresent(FieldComment.class)) {
+                CLASS_AND_FIELDCOMMENT.get(className).put(field.getName(), field.getAnnotation(FieldComment.class));
+                P_FIELDCOMMENT.put(field.getName(), field.getAnnotation(FieldComment.class));
+            } else {
+                P_FIELDCOMMENT.put(field.getName(), ST_FIELDCOMMENT);
+            }
+            //特殊注解
+            if (field.isAnnotationPresent(Column.class)) {
+                P_COLUMN.put(field.getName(), field.getAnnotation(Column.class));
+            }
+        }
     }
 
     public static class SYS_CONSOLE_YML {
