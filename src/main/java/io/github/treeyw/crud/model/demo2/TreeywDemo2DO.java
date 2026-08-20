@@ -17,7 +17,7 @@ import java.util.Date;
         name = "treeyw_demo2"
 )
 @DataSourceDB(
-        dataSource = "tool",
+        dataSource = "sqlite",
         tableName = "测试样例2"
 )
 @Data

@@ -39,18 +39,32 @@ tree-crud:
         max-active: 5
         ddlAuto: update
         dialect: org.hibernate.dialect.MySQL8Dialect
-      tool: #数据源名称
-        dbType: mysql
-        dbName: tree2 #补充项，尽量填写，url中也要有避免分割意外
-        url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
-        username: root
-        password: 123456
-        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      sqlite:
+        dbType: sqlite
+        dbName: tree.db # SQLite 不使用该字段，保留仅为配置结构统一
+        url: jdbc:sqlite:I:/data/sqlite/tree.db
+        username:
+        password:
+        driver-class-name: org.sqlite.JDBC
         max-wait: 10000
-        min-idle: 2
+        min-idle: 1
         max-active: 5
         ddlAuto: update
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.community.dialect.SQLiteDialect
+#      tool: #数据源名称
+#        dbType: mysql
+#        dbName: tree2 #补充项，尽量填写，url中也要有避免分割意外
+#        url: jdbc:log4jdbc:mysql://127.0.0.1:3306/tree2?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
+#        username: root
+#        password: 123456
+#        driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#        max-wait: 10000
+#        min-idle: 2
+#        max-active: 5
+#        ddlAuto: update
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+       #SQLite 配置样例；启用时请同时把实体的 @DataSourceDB 指向 sqlite
+
 logging:
   level:
     root: info

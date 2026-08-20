@@ -31,7 +31,9 @@ public class CommentIntegrator implements Integrator {
 
     @Override
     public void integrate(Metadata metadata, SessionFactoryImplementor sessionFactory, SessionFactoryServiceRegistry serviceRegistry) {
-        processComment(metadata);
+        boolean supportsColumnComment = !sessionFactory.getJdbcServices().getDialect()
+                .getClass().getSimpleName().toLowerCase().contains("sqlite");
+        processComment(metadata, supportsColumnComment);
     }
 
     @Override
@@ -43,12 +45,15 @@ public class CommentIntegrator implements Integrator {
      * @description 自定义注解加入到建表字段中
      * @date 2025/8/24 19:43
      */
-    private void fieldComment2Coumn(FieldComment fieldComment, PersistentClass persistentClass, String columnName) {
+    private void fieldComment2Coumn(FieldComment fieldComment, PersistentClass persistentClass,
+                                    String columnName, boolean supportsColumnComment) {
 
         String sqlColumnName = persistentClass.getProperty(columnName).getValue().getColumns().get(0).getText();
         persistentClass.getTable().getColumns().forEach(column -> {
             if (sqlColumnName.equalsIgnoreCase(column.getName())) {
-                column.setComment(fieldComment.value());
+                if (supportsColumnComment) {
+                    column.setComment(fieldComment.value());
+                }
                 //长度
                 if (fieldComment.length() != 0)
                     column.setLength(fieldComment.length());
@@ -63,29 +68,30 @@ public class CommentIntegrator implements Integrator {
 
     }
 
-    private void processComment(Metadata metadata) {
+    private void processComment(Metadata metadata, boolean supportsColumnComment) {
         for (PersistentClass persistentClass : metadata.getEntityBindings()) {
 
             Property identifierProperty = persistentClass.getIdentifierProperty();
             if (identifierProperty != null) {
-                fieldComment(persistentClass, identifierProperty.getName());
+                fieldComment(persistentClass, identifierProperty.getName(), supportsColumnComment);
             } else {
                 org.hibernate.mapping.Component component = persistentClass.getIdentifierMapper();
                 if (component != null) {
                     //noinspection unchecked
                     Iterator<Property> iterator = component.getPropertyIterator();
                     while (iterator.hasNext()) {
-                        fieldComment(persistentClass, iterator.next().getName());
+                        fieldComment(persistentClass, iterator.next().getName(), supportsColumnComment);
                     }
                 }
             }
             // Process fields with Comment annotation.
-            persistentClass.getDeclaredProperties().forEach(property -> fieldComment(persistentClass, property.getName()));
+            persistentClass.getDeclaredProperties().forEach(property ->
+                    fieldComment(persistentClass, property.getName(), supportsColumnComment));
 
         }
     }
 
-    private void fieldComment(PersistentClass persistentClass, String columnName) {
+    private void fieldComment(PersistentClass persistentClass, String columnName, boolean supportsColumnComment) {
         Field field = null;
         try {
             field = persistentClass.getMappedClass().getDeclaredField(columnName);
@@ -98,7 +104,8 @@ public class CommentIntegrator implements Integrator {
         }
         //找到字段，并有注解，开始处理
         if (field != null && field.isAnnotationPresent(FieldComment.class))
-            fieldComment2Coumn(field.getAnnotation(FieldComment.class), persistentClass, columnName);
+            fieldComment2Coumn(field.getAnnotation(FieldComment.class), persistentClass,
+                    columnName, supportsColumnComment);
     }
 
 }
