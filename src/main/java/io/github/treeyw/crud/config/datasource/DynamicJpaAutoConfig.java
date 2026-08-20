@@ -97,6 +97,10 @@ public class DynamicJpaAutoConfig {
                     (IntegratorProvider) () -> Collections.singletonList(CommentIntegrator.INSTANCE));
             jpaProps.put("hibernate.physical_naming_strategy",
                     "io.github.treeyw.crud.config.datasource.init.PhysicalNamingStrategy");
+            jpaProps.put("hibernate.hikari.maximumPoolSize", p.getMaxActive() != null ? p.getMaxActive() : 10);
+            jpaProps.put("hibernate.hikari.minimumIdle", p.getMinIdle() != null ? p.getMinIdle() : 2);
+            jpaProps.put("hibernate.hikari.connectionTimeout", p.getMaxWait() != null ? p.getMaxWait() : 30000);
+
             if (p.getJpa() != null) jpaProps.putAll(p.getJpa());
 
             // EntityManagerFactoryBuilder
